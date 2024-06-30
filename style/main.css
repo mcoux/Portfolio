@@ -1,5 +1,5 @@
 body{
-    background-color: #383838;
+    background-color:#383838;
 }
 
 .text{
@@ -40,4 +40,20 @@ body{
 
 .selected{
     background-color: #383838;
+}
+
+.paragraphe{
+    display: flex;
+    word-wrap: break-word;
+    flex-wrap: wrap;
+    width: 800px;
+}
+
+.skills-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skill-block{
+    padding-right: 75px;
 }
