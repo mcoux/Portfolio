@@ -1,8 +1,12 @@
 import { FunctionOverloadingNode, PointLightHelper } from 'three/webgpu';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { MathUtils } from 'three';
 import './index.css'
 
 import * as three from 'three'
+import { EffectComposer, RenderPass } from 'three/examples/jsm/Addons.js';
+import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js';
 
 const winWidth = window.innerWidth;
 const winHeight = window.innerHeight;
@@ -18,40 +22,73 @@ render.setSize(winWidth,winHeight);
 cam.position.setZ(30);
 cam.position.setY(10);
 
-
 render.render(scene, cam);
 
+
+//BloomRenderer
+const bloomRender = new RenderPass(scene,cam);
+const bloomP = new UnrealBloomPass( new three.Vector2(winWidth,winHeight),1.5,0.4,0.85);
+bloomP.threshold = 0;
+bloomP.strength = 2;
+bloomP.radius = 0;
+const bloomComposer = new EffectComposer(render);
+bloomComposer.setSize(window.innerWidth, window.innerHeight);
+bloomComposer.renderToScreen = true;
+bloomComposer.addPass(bloomRender);
+bloomComposer.addPass(bloomP);
+
+//Soleil
 const sphere = new three.SphereGeometry(5);
 
-const matS = new three.MeshPhongMaterial({color: 0xFFFF00});
+const matS = new three.MeshPhongMaterial({color: 0xFFFFAA});
 matS.emissive.set(0xFFFF55);
+matS.specular.set(0xFFFFFF);
+matS.shininess = 50;
 
 const soleil = new three.Mesh(sphere,matS);
 soleil.position.set(0,10,-60)
 
 
+//Plan
+const GeomP = new three.PlaneGeometry(200,200);
+const matP = new three.MeshBasicMaterial({color: 0x140c26});
+const plane = new three.Mesh(GeomP, matP);
+plane.rotateX(MathUtils.DEG2RAD*-90);
+scene.add( plane );
+
+//pyramide
+const geomPyr = new three.ConeGeometry(10, 20,3);
+const matPyr = new three.MeshBasicMaterial({color: 0x110A20});
+const pyr = new three.Mesh(geomPyr,matPyr);
+
+pyr.position.set(20,10,-50);
+scene.add(pyr)
+
 
 const ambient = new three.AmbientLight(0xFFFFFF);
 
-const pointLight = new three.PointLight(0xFFFFFF,20,200);
-//pointLight.position.set(5,5,5);
-const helper = new PointLightHelper(pointLight);
 
 
 const axesHelper = new three.AxesHelper( 5 );
 scene.add( axesHelper );
 
-const gridHelper = new three.GridHelper( 200, 40 );
 
 //const controls = new OrbitControls(cam,render.domElement);
 
-scene.add( gridHelper )
 
 scene.add(ambient);
 
-scene.add(pointLight);
-scene.add(helper);
 scene.add(soleil);
+
+
+function moveCam(){
+    const t =document.body.getBoundingClientRect().top;
+    cam.position.y = 10 + t*0.005;
+}
+
+document.body.onscroll = moveCam;
+
+
 
 function animate(){
     requestAnimationFrame(animate);
@@ -60,7 +97,7 @@ function animate(){
     //controls.update();
 
     render.render(scene, cam);
-
+    bloomComposer.render();
 }
 
 animate()
