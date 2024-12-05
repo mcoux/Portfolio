@@ -26,14 +26,15 @@ canvas {
     margin: 0px auto;
     padding: 120px 0px;
     
-    /*display: grid;*/
-    grid-template-columns: repeat(12, 1fr);
+    /*display: grid;
+     grid-template-columns: repeat(12, 1fr);*/
   }
   
-  h1, h2, h3, blockquote {
+  p,li, h1, h2, h3,h4, blockquote {
     font-family: elevon, sans-serif;
     font-weight: 700;
     font-style: normal;
+    color: white;
   }
   
   canvas {
@@ -87,4 +88,9 @@ canvas {
   
   .skill-block{
       padding-right: 75px;
+  } 
+
+  .paragraphe-text {
+    background-color:var(--dark-bg) ;
+
   }
