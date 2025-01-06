@@ -17,6 +17,11 @@ const render = new three.WebGLRenderer({
     canvas : document.querySelector('#glcanvas'),
 });
 
+const PLANE_COLOR = {color: 0x0e2b10}
+const MTN_COLOR = {color: 0x0e2b10}
+const SUN_COLOR = {color: 0xFFFFAA}
+
+
 render.setPixelRatio(window.devicePixelRatio);
 render.setSize(winWidth,winHeight);
 cam.position.setZ(30);
@@ -40,7 +45,7 @@ bloomComposer.addPass(bloomP);
 //Soleil
 const sphere = new three.SphereGeometry(5);
 
-const matS = new three.MeshPhongMaterial({color: 0xFFFFAA});
+const matS = new three.MeshPhongMaterial(SUN_COLOR);
 matS.emissive.set(0xFFFF55);
 matS.specular.set(0xFFFFFF);
 matS.shininess = 50;
@@ -51,14 +56,14 @@ soleil.position.set(0,10,-60)
 
 //Plan
 const GeomP = new three.PlaneGeometry(200,200);
-const matP = new three.MeshBasicMaterial({color: 0x140c26});
+const matP = new three.MeshBasicMaterial(PLANE_COLOR);
 const plane = new three.Mesh(GeomP, matP);
 plane.rotateX(MathUtils.DEG2RAD*-90);
 scene.add( plane );
 
 //pyramide
 const geomPyr = new three.ConeGeometry(10, 20,3);
-const matPyr = new three.MeshBasicMaterial({color: 0x110A20});
+const matPyr = new three.MeshBasicMaterial(MTN_COLOR);
 const pyr = new three.Mesh(geomPyr,matPyr);
 
 pyr.position.set(20,10,-50);
