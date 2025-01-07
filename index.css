@@ -110,6 +110,14 @@ blockquote p {
   border-radius: 20px;
 }
 
+.text-block {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 5px;
+  margin-bottom: 20px;
+  width: max-content;
+  border-radius: 20px;
+}
+
 a {
   color: rgb(0,  180, 255);
 }
