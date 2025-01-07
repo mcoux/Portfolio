@@ -17,7 +17,7 @@ const render = new three.WebGLRenderer({
     canvas : document.querySelector('#glcanvas'),
 });
 
-const PLANE_COLOR = {color: 0x0e2b10}
+const PLANE_COLOR = {color: 0x2e7514}
 const MTN_COLOR = {color: 0x0e2b10}
 const SUN_COLOR = {color: 0xFFFFAA}
 const BG_COLOR = {color: 0x3c7ab5}
@@ -60,7 +60,7 @@ const GeomP = new three.PlaneGeometry(200,200);
 const matP = new three.MeshBasicMaterial(PLANE_COLOR);
 const plane = new three.Mesh(GeomP, matP);
 plane.rotateX(MathUtils.DEG2RAD*-90);
-//scene.add( plane );
+scene.add( plane );
 
 //pyramide
 const geomPyr = new three.ConeGeometry(10, 20,3);
@@ -89,7 +89,7 @@ scene.background = new three.Color(0x3c7ab5);
 
 function moveCam(){
     const t =document.body.getBoundingClientRect().top;
-    cam.position.y = 10 + t*0.005;
+    cam.position.y = 10 + t*0.004;
 }
 
 document.body.onscroll = moveCam;
